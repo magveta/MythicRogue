@@ -72,6 +72,10 @@ class MovementAction(ActionWithDirection):
             return # Destination blocked by an entity.
 
         self.entity.move(self.dx, self.dy)
+        
+class WaitAction(Action):
+    def perform(self) -> None:
+        pass
 
 class BumpAction(ActionWithDirection):
     def perform(self) -> None:
