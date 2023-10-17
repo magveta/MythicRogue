@@ -4,10 +4,49 @@ from typing import Optional, TYPE_CHECKING
 
 import tcod.event
 
-from actions import Action, EscapeAction, BumpAction
+from actions import Action, EscapeAction, BumpAction, WaitAction, MovementAction
 
 if TYPE_CHECKING:
     from engine import Engine
+
+SHIFT_KEYS = {
+    tcod.event.KeySym.UP: (-1, -1),
+    tcod.event.KeySym.DOWN: (1, 1),
+    tcod.event.KeySym.LEFT: (-1, 1),
+    tcod.event.KeySym.RIGHT: (1, -1),
+}
+
+MOVE_KEYS = {
+    # Arrow keys.
+    tcod.event.KeySym.UP: (0, -1),
+    tcod.event.KeySym.DOWN: (0, 1),
+    tcod.event.KeySym.LEFT: (-1, 0),
+    tcod.event.KeySym.RIGHT: (1, 0),
+    # Numpad keys.
+    tcod.event.KeySym.KP_1: (-1, 1),
+    tcod.event.KeySym.KP_2: (0, 1),
+    tcod.event.KeySym.KP_3: (1, 1),
+    tcod.event.KeySym.KP_4: (-1, 0),
+    tcod.event.KeySym.KP_6: (1, 0),
+    tcod.event.KeySym.KP_7: (-1, -1),
+    tcod.event.KeySym.KP_8: (0, -1),
+    tcod.event.KeySym.KP_9: (1, -1),
+    # Vi keys.
+    tcod.event.KeySym.h: (-1, 0),
+    tcod.event.KeySym.j: (0, 1),
+    tcod.event.KeySym.k: (0, -1),
+    tcod.event.KeySym.l: (1, 0),
+    tcod.event.KeySym.y: (-1, -1),
+    tcod.event.KeySym.u: (1, -1),
+    tcod.event.KeySym.b: (-1, 1),
+    tcod.event.KeySym.n: (1, 1),
+}
+
+WAIT_KEYS = {
+    tcod.event.KeySym.PERIOD,
+    tcod.event.KeySym.KP_5,
+    tcod.event.KeySym.CLEAR,
+}
 
 class EventHandler(tcod.event.EventDispatch[Action]):
     def __init__(self, engine: Engine):
@@ -34,26 +73,15 @@ class EventHandler(tcod.event.EventDispatch[Action]):
         key = event.sym
         state = tcod.event.get_keyboard_state()
         player = self.engine.player
-        
-        if state[tcod.event.Scancode.LSHIFT]:
-            if key == tcod.event.KeySym.UP:
-                action = BumpAction(player, dx=-1, dy=-1)
-            elif key == tcod.event.KeySym.DOWN:
-                action = BumpAction(player, dx=1, dy=1)
-            elif key == tcod.event.KeySym.LEFT:
-                action = BumpAction(player, dx=-1, dy=1)
-            elif key == tcod.event.KeySym.RIGHT:
-                action = BumpAction(player, dx=1, dy=-1)
 
-        elif key == tcod.event.KeySym.UP:
-            action = BumpAction(player, dx=0, dy=-1)
-        elif key == tcod.event.KeySym.DOWN:
-            action = BumpAction(player, dx=0, dy=1)
-        elif key == tcod.event.KeySym.LEFT:
-            action = BumpAction(player, dx=-1, dy=0)
-        elif key == tcod.event.KeySym.RIGHT:
-            action = BumpAction(player, dx=1, dy=0)
-
+        if key in MOVE_KEYS and state[tcod.event.Scancode.LSHIFT]:
+            dx, dy = SHIFT_KEYS[key]
+            action = BumpAction(player, dx, dy)
+        elif key in MOVE_KEYS:
+            dx, dy = MOVE_KEYS[key]
+            action = MovementAction(player, dx, dy)
+        elif key in WAIT_KEYS:
+            action = WaitAction(player)
         elif key == tcod.event.KeySym.ESCAPE:
             action = EscapeAction(player)
 
