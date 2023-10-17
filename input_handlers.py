@@ -46,6 +46,7 @@ WAIT_KEYS = {
     tcod.event.KeySym.PERIOD,
     tcod.event.KeySym.KP_5,
     tcod.event.KeySym.CLEAR,
+    tcod.event.KeySym.SPACE,
 }
 
 class EventHandler(tcod.event.EventDispatch[Action]):
@@ -79,7 +80,7 @@ class EventHandler(tcod.event.EventDispatch[Action]):
             action = BumpAction(player, dx, dy)
         elif key in MOVE_KEYS:
             dx, dy = MOVE_KEYS[key]
-            action = MovementAction(player, dx, dy)
+            action = BumpAction(player, dx, dy)
         elif key in WAIT_KEYS:
             action = WaitAction(player)
         elif key == tcod.event.KeySym.ESCAPE:
