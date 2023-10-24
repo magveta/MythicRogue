@@ -1,17 +1,19 @@
 import tcod
 
 import copy
+import color
 from engine import Engine
 from entity import Entity
 from procgen import generate_dungeon
 import entity_factories
+import color
 
 def main() -> None:
     screen_width = 80
     screen_height = 50
 
     map_width = 80
-    map_height = 50
+    map_height = 43
 
     room_max_size = 10
     room_min_size = 6
@@ -33,7 +35,12 @@ def main() -> None:
         map_height=map_height,
         max_monsters_per_room=max_monsters_per_room,
         engine=engine,)
+    
     engine.update_fov()
+    
+    engine.message_log.add_message(
+        "Hello and welcome, adventurer, to yet another dungeon!", color.welcome_text
+    )
 
     with tcod.context.new_terminal(
         screen_width,

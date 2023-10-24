@@ -2,7 +2,10 @@ white = (250, 241, 198)
 black = (40, 40, 40)
 
 player_atk = (0xE0, 0xE0, 0xE0)
-enemy_atk = (0xFF, 0xC0, 0xC0)
+player_atk_miss = (0xE0, 0xE0, 0xE0)
+
+enemy_atk = (250, 241, 198)
+enemy_atk_miss = (250, 241, 198)
 
 player_die = (0xFF, 0x30, 0x30)
 enemy_die = (0xFF, 0xA0, 0x30)
