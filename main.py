@@ -6,7 +6,7 @@ from engine import Engine
 from entity import Entity
 from procgen import generate_dungeon
 import entity_factories
-import color
+from dungeon_name import generate_dungeon_name
 
 def main() -> None:
     screen_width = 80
@@ -38,8 +38,15 @@ def main() -> None:
     
     engine.update_fov()
     
+    dungeon_name = generate_dungeon_name()
     engine.message_log.add_message(
-        "Hello and welcome, adventurer, to yet another dungeon!", color.welcome_text
+        "Hello, delver of crypts.", color.welcome_text
+    )
+    engine.message_log.add_message(
+        f"Thou shall now enter the place known as the {dungeon_name}.", color.welcome_text
+    )
+    engine.message_log.add_message(
+        "May the Gods of old be with thee.", color.welcome_text
     )
 
     with tcod.context.new_terminal(
