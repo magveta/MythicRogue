@@ -21,7 +21,7 @@ def main() -> None:
     
     max_monsters_per_room = 2
     
-    tileset = tcod.tileset.load_tilesheet("Fnord_16x16.png", 16, 16, tcod.tileset.CHARMAP_CP437)
+    tileset = tcod.tileset.load_tilesheet("Md_curses_16x16.png", 16, 16, tcod.tileset.CHARMAP_CP437)
 
     player = copy.deepcopy(entity_factories.player)
     
@@ -40,13 +40,10 @@ def main() -> None:
     
     dungeon_name = generate_dungeon_name()
     engine.message_log.add_message(
-        "Hello, delver of crypts.", color.welcome_text
+        "Hello, delver.", color.welcome_text
     )
     engine.message_log.add_message(
-        f"Thou shall now enter the place known as the {dungeon_name}.", color.welcome_text
-    )
-    engine.message_log.add_message(
-        "May the Gods of old be with thee.", color.welcome_text
+        f"Thou shalt now enter the place known as the {dungeon_name}.", color.welcome_text
     )
 
     with tcod.context.new_terminal(
