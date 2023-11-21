@@ -24,6 +24,7 @@ class Entity:
         char: str = "?",
         color: Tuple[int, int, int] = (255, 255, 255),
         name: str = "<Unnamed>",
+        description = "",
         blocks_movement: bool = False,
         render_order = RenderOrder.CORPSE,
     ):
@@ -32,6 +33,7 @@ class Entity:
         self.char = char
         self.color = color
         self.name = name
+        self.description=description
         self.blocks_movement = blocks_movement
         self.render_order = render_order
         if gamemap:
@@ -74,6 +76,7 @@ class Actor(Entity):
         color: Tuple[int, int, int] = (255, 255, 255),
         name: str = "<Unnamed>",
         ai_cls: Type[BaseAI],
+        description = "",
         fighter: Fighter
     ):
         super().__init__(
@@ -87,7 +90,7 @@ class Actor(Entity):
         )
 
         self.ai: Optional[BaseAI] = ai_cls(self)
-
+        self.description=description
         self.fighter = fighter
         self.fighter.entity = self
 
