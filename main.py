@@ -8,6 +8,7 @@ from procgen import generate_dungeon
 import entity_factories
 from dungeon_name import generate_dungeon_name
 
+
 def main() -> None:
     screen_width = 80
     screen_height = 50
