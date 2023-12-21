@@ -50,7 +50,6 @@ WAIT_KEYS = {
 }
 
 
-
 class EventHandler(tcod.event.EventDispatch[Action]):
     def __init__(self, engine: Engine):
         self.engine = engine
@@ -63,13 +62,14 @@ class EventHandler(tcod.event.EventDispatch[Action]):
     
     def ev_mousemotion(self, event: tcod.event.MouseMotion) -> None:
         if self.engine.game_map.in_bounds(event.tile.x, event.tile.y):
-           self.engine.mouse_location = event.tile.x, event.tile.y
+            self.engine.mouse_location = event.tile.x, event.tile.y
 
     def ev_quit(self, event: tcod.event.Quit) -> Optional[Action]:
         raise SystemExit()
     
     def on_render(self, console: tcod.Console) -> None:
         self.engine.render(console)
+
 
 class MainGameEventHandler(EventHandler):
     def handle_events(self, context: tcod.context.Context) -> None:
@@ -108,6 +108,7 @@ class MainGameEventHandler(EventHandler):
         # No valid key was pressed
         return action
     
+
 class GameOverEventHandler(EventHandler):
     def handle_events(self, context: tcod.context.Context) -> None:
         for event in tcod.event.wait():
@@ -128,6 +129,7 @@ class GameOverEventHandler(EventHandler):
 
         # No valid key was pressed
         return action
+
 
 CURSOR_Y_KEYS = {
     tcod.event.KeySym.UP: -1,
