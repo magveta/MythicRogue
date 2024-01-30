@@ -1,5 +1,4 @@
 import tcod
-
 import copy
 import traceback
 import color
@@ -8,7 +7,6 @@ from entity import Entity
 from procgen import generate_dungeon
 import entity_factories
 from dungeon_name import generate_dungeon_name
-
 
 def main() -> None:
     screen_width = 80
@@ -21,7 +19,8 @@ def main() -> None:
     room_min_size = 6
     max_rooms = 30
     
-    max_monsters_per_room = 2
+    max_monsters_per_room = 3
+    max_items_per_room = 2
     
     tileset = tcod.tileset.load_tilesheet("Md_curses_16x16.png", 16, 16, tcod.tileset.CHARMAP_CP437)
 
@@ -36,6 +35,7 @@ def main() -> None:
         map_width=map_width,
         map_height=map_height,
         max_monsters_per_room=max_monsters_per_room,
+        max_items_per_room=max_items_per_room,
         engine=engine,)
     
     engine.update_fov()
